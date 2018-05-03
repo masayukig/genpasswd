@@ -21,7 +21,7 @@ Or clone the repo:
 
     $ git clone https://github.com/masayukig/genpasswd.git
     $ python setup.py install
-    
+
 Contributing
 ------------
 
