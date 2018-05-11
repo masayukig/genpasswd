@@ -1,40 +1,29 @@
-from setuptools import setup, find_packages
-from codecs import open
-from os import path
+# Copyright (c) 2013 Hewlett-Packard Development Company, L.P.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+# implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-__version__ = '0.0.1'
+# THIS FILE IS MANAGED BY THE GLOBAL REQUIREMENTS REPO - DO NOT EDIT
+import setuptools
 
-here = path.abspath(path.dirname(__file__))
+# In python < 2.7.4, a lazy loading of package `pbr` will break
+# setuptools if some other modules registered functions in `atexit`.
+# solution from: http://bugs.python.org/issue15881#msg170215
+try:
+    import multiprocessing  # noqa
+except ImportError:
+    pass
 
-# Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
-
-# get the dependencies and installs
-with open(path.join(here, 'requirements.txt'), encoding='utf-8') as f:
-    all_reqs = f.read().split('\n')
-
-install_requires = [x.strip() for x in all_reqs if 'git+' not in x]
-dependency_links = [x.strip().replace('git+', '') for x in all_reqs if x.startswith('git+')]
-
-setup(
-    name='genpasswd',
-    version=__version__,
-    description='A python package that generates memorable passwords',
-    long_description=long_description,
-    url='https://github.com/masayukig/genpasswd',
-    download_url='https://github.com/masayukig/genpasswd/tarball/' + __version__,
-    license='BSD',
-    classifiers=[
-      'Development Status :: 3 - Alpha',
-      'Intended Audience :: Developers',
-      'Programming Language :: Python :: 3',
-    ],
-    keywords='',
-    packages=find_packages(exclude=['docs', 'tests*']),
-    include_package_data=True,
-    author='Masayuki Igawa',
-    install_requires=install_requires,
-    dependency_links=dependency_links,
-    author_email='masayuki@igawa.io'
-)
+setuptools.setup(
+    setup_requires=['pbr>=2.0.0'],
+    pbr=True)
