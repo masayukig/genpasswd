@@ -20,9 +20,9 @@ import subprocess
 import sys
 
 args = sys.argv
-
 # FIXME: SQLite3 path should be customizable
-dbfile = 'data/ejdict.sqlite3'
+
+dbfile = path.dirname(path.abspath(__file__)) + '/data/ejdict.sqlite3'
 
 def main(argv=sys.argv):
     with closing(sqlite3.connect(dbfile)) as conn:
@@ -31,7 +31,7 @@ def main(argv=sys.argv):
         words = [re.sub("[-\"' !.,]", '', row[0]).lower()
                  for row in c.execute(sql)]
 
-    print(words)
+    #print(words)
     print('-'.join(words))
 
 
