@@ -11,6 +11,7 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
+import argparse
 from builtins import input
 from contextlib import closing
 from os import path
@@ -19,17 +20,20 @@ import sqlite3
 import subprocess
 import sys
 
-args = sys.argv
+parser = argparse.ArgumentParser(description='Generate a memorable password.')
+parser.add_argument('--count', default='3', type=int)
+args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
 
 dbfile = path.dirname(path.abspath(__file__)) + '/data/ejdict.sqlite3'
 
-def main(argv=sys.argv):
+def main(args=args):
+
     with closing(sqlite3.connect(dbfile)) as conn:
         c = conn.cursor()
-        sql = "select word from items order by random() limit 3"
+        sql = "select word from items order by random() limit ?"
         words = [re.sub("[-\"' !.,]", '', row[0]).lower()
-                 for row in c.execute(sql)]
+                 for row in c.execute(sql, (args.count,))]
 
     #print(words)
     print('-'.join(words))
