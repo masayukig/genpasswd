@@ -21,7 +21,7 @@ import subprocess
 import sys
 
 parser = argparse.ArgumentParser(description='Generate a memorable password.')
-parser.add_argument('--count', default='3', type=int)
+parser.add_argument('--count', '-c', default='3', type=int)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
 
