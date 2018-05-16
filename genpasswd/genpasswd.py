@@ -23,6 +23,7 @@ import sys
 parser = argparse.ArgumentParser(description='Generate a memorable password.')
 parser.add_argument('--count', '-c', default='3', type=int)
 parser.add_argument('--min', '-m', default='0', type=int)
+parser.add_argument('--join-string', '-j', default='-', type=str)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
 
@@ -37,7 +38,7 @@ def main(args=args):
         words = [re.sub("[-\"' !.,()]", '', row[0]).lower()
                  for row in c.execute(sql, (args.min, args.count,))]
 
-    print('-'.join(words))
+    print(args.join_string.join(words))
 
 
 if __name__ == '__main__':
