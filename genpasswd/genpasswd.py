@@ -37,7 +37,6 @@ def main(args=args):
         words = [re.sub("[-\"' !.,()]", '', row[0]).lower()
                  for row in c.execute(sql, (args.min, args.count,))]
 
-    #print(words)
     print('-'.join(words))
 
 
