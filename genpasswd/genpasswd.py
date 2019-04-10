@@ -33,9 +33,15 @@ def main(args=args):
 
     with closing(sqlite3.connect(dbfile)) as conn:
         c = conn.cursor()
-        sql = "select word from items where length(word) > ?" \
+        sql = "select word from items where length(word) >= ? " \
+        "and word not like '%-%' " \
+        "and word not like '%\"%' and word not like \"%'%\" " \
+        "and word not like '%,%' and word not like '%!%' " \
+        "and word not like '%.%' and word not like '% %' " \
+        "and word not like '%(%' and word not like '%)%' " \
+        "and word not like '%/%' and word not like '%\%' " \
         "order by random() limit ?"
-        words = [re.sub("[-\"' !.,()]", '', row[0]).lower()
+        words = [re.sub("[-\"' !.,()/]", '', row[0]).lower()
                  for row in c.execute(sql, (args.min, args.count,))]
 
     print(args.join_string.join(words))
