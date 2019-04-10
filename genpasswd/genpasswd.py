@@ -22,8 +22,8 @@ import sys
 
 parser = argparse.ArgumentParser(description='Generate a memorable password.')
 parser.add_argument('--count', '-c', default='3', type=int)
-parser.add_argument('--min', '-m', default='0', type=int)
-parser.add_argument('--max', '-x', default='6', type=int)
+parser.add_argument('--min', '-m', default='4', type=int)
+parser.add_argument('--max', '-x', default='8', type=int)
 parser.add_argument('--join-string', '-j', default='-', type=str)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
