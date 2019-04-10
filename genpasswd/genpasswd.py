@@ -40,7 +40,7 @@ def main(args=args):
         "and word not like '%,%' and word not like '%!%' " \
         "and word not like '%.%' and word not like '% %' " \
         "and word not like '%(%' and word not like '%)%' " \
-        "and word not like '%/%' and word not like '%\%' " \
+        "and word not like '%/%' " \
         "order by random() limit ?"
         words = [re.sub("[-\"' !.,()/]", '', row[0]).lower()
                  for row in c.execute(sql, (args.min, args.max, args.count,))]
