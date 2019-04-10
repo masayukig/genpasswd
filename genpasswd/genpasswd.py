@@ -23,6 +23,7 @@ import sys
 parser = argparse.ArgumentParser(description='Generate a memorable password.')
 parser.add_argument('--count', '-c', default='3', type=int)
 parser.add_argument('--min', '-m', default='0', type=int)
+parser.add_argument('--max', '-x', default='6', type=int)
 parser.add_argument('--join-string', '-j', default='-', type=str)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
@@ -34,7 +35,7 @@ def main(args=args):
     with closing(sqlite3.connect(dbfile)) as conn:
         c = conn.cursor()
         sql = "select word from items where length(word) >= ? " \
-        "and word not like '%-%' " \
+        "and length(word) <= ? and word not like '%-%' " \
         "and word not like '%\"%' and word not like \"%'%\" " \
         "and word not like '%,%' and word not like '%!%' " \
         "and word not like '%.%' and word not like '% %' " \
@@ -42,7 +43,7 @@ def main(args=args):
         "and word not like '%/%' and word not like '%\%' " \
         "order by random() limit ?"
         words = [re.sub("[-\"' !.,()/]", '', row[0]).lower()
-                 for row in c.execute(sql, (args.min, args.count,))]
+                 for row in c.execute(sql, (args.min, args.max, args.count,))]
 
     print(args.join_string.join(words))
 
