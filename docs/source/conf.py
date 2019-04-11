@@ -49,7 +49,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Generate memorable password'
-copyright = '2016, Masayuki Igawa'
+copyright = '2016-2019, Masayuki Igawa'
 author = 'Masayuki Igawa'
 
 # The version info for the project you're documenting, acts as replacement for
