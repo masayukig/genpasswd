@@ -1,5 +1,5 @@
 Generate memorable password
-===============================
+===========================
 
 version number: 0.0.1
 author: Masayuki Igawa
