@@ -24,7 +24,8 @@ parser = argparse.ArgumentParser(description='Generate a memorable password.')
 parser.add_argument('--count', '-c', default='3', type=int)
 parser.add_argument('--min', '-m', default='4', type=int)
 parser.add_argument('--max', '-x', default='8', type=int)
-parser.add_argument('--join-string', '-j', default='-', type=str)
+parser.add_argument('--lower', '-l', default=False, action='store_true')
+parser.add_argument('--join-string', '-j', default='', type=str)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
 
@@ -42,8 +43,12 @@ def main(args=args):
         "and word not like '%(%' and word not like '%)%' " \
         "and word not like '%/%' " \
         "order by random() limit ?"
-        words = [re.sub("[-\"' !.,()/]", '', row[0]).lower()
-                 for row in c.execute(sql, (args.min, args.max, args.count,))]
+        if args.lower:
+            words = [re.sub("[-\"' !.,()/]", '', row[0]).lower()
+                    for row in c.execute(sql, (args.min, args.max, args.count,))]
+        else:
+            words = [re.sub("[-\"' !.,()/]", '', row[0]).lower().capitalize()
+                    for row in c.execute(sql, (args.min, args.max, args.count,))]
 
     print(args.join_string.join(words))
 
