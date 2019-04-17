@@ -15,6 +15,7 @@ import argparse
 from builtins import input
 from contextlib import closing
 from os import path
+import random
 import re
 import sqlite3
 import subprocess
@@ -26,6 +27,7 @@ parser.add_argument('--min', '-m', default='4', type=int)
 parser.add_argument('--max', '-x', default='8', type=int)
 parser.add_argument('--lower', '-l', default=False, action='store_true')
 parser.add_argument('--join-string', '-j', default='', type=str)
+parser.add_argument('--digits', '-d', default=3, type=int)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
 
@@ -50,7 +52,13 @@ def main(args=args):
             words = [re.sub("[-\"' !.,()/]", '', row[0]).lower().capitalize()
                     for row in c.execute(sql, (args.min, args.max, args.count,))]
 
-    print(args.join_string.join(words))
+    password = args.join_string.join(words)
+    if args.digits:
+        rand_digits = format(random.randint(0, 10**args.digits - 1),
+            str('0') + str(args.digits))
+        password = args.join_string.join([password, rand_digits])
+
+    print(password)
 
 
 if __name__ == '__main__':
