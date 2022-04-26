@@ -12,12 +12,12 @@ A python package that generates memorable passwords
 Installation / Usage
 --------------------
 
-To install use pip(TBD):
+To install use pip(TBD)::
 
     $ pip install genpasswd
 
 
-Or clone the repo:
+Or clone the repo::
 
     $ git clone https://github.com/masayukig/genpasswd.git
     $ python setup.py install
