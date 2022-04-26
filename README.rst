@@ -1,7 +1,7 @@
 Generate memorable password
 ===========================
 
-version number: 0.0.1
+version number: 0.0.2
 author: Masayuki Igawa
 
 Overview
@@ -12,7 +12,7 @@ A python package that generates memorable passwords
 Installation / Usage
 --------------------
 
-To install use pip:
+To install use pip(TBD):
 
     $ pip install genpasswd
 
