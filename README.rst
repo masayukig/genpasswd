@@ -12,7 +12,7 @@ A python package that generates memorable passwords
 Installation / Usage
 --------------------
 
-To install use pip:
+To install use pip(TBD):
 
     $ pip install genpasswd
 
