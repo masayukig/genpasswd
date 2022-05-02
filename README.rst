@@ -12,8 +12,9 @@ A python package that generates memorable passwords
 Installation / Usage
 --------------------
 
-To install use pip(TBD)::
+To install use pip from pypi(TBD)::
 
+..
     $ pip install genpasswd
 
 
