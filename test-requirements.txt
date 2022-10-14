@@ -1,0 +1,8 @@
+# tests
+hacking>=4.0.0,<4.1.0 # Apache-2.0
+flake8-import-order # LGPLv3
+flake8-logging-format>=0.6.0 # Apache-2.0
+
+testtools
+stestr
+coverage
