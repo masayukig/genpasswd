@@ -12,14 +12,12 @@
 # under the License.
 
 import argparse
-from builtins import input
-from contextlib import closing
-from os import path
+import contextlib
+import os
 import random
 import re
 import sqlite3
-import subprocess
-import sys
+
 
 parser = argparse.ArgumentParser(description='Generate a memorable password.')
 parser.add_argument('--count', '-c', default='3', type=int)
@@ -31,31 +29,34 @@ parser.add_argument('--digits', '-d', default=3, type=int)
 args = parser.parse_args()
 # FIXME: SQLite3 path should be customizable
 
-dbfile = path.dirname(path.abspath(__file__)) + '/data/ejdict.sqlite3'
+dbfile = os.path.dirname(os.path.abspath(__file__)) + '/data/ejdict.sqlite3'
+
 
 def main(args=args):
 
-    with closing(sqlite3.connect(dbfile)) as conn:
+    with contextlib.closing(sqlite3.connect(dbfile)) as conn:
         c = conn.cursor()
         sql = "select word from items where length(word) >= ? " \
-        "and length(word) <= ? and word not like '%-%' " \
-        "and word not like '%\"%' and word not like \"%'%\" " \
-        "and word not like '%,%' and word not like '%!%' " \
-        "and word not like '%.%' and word not like '% %' " \
-        "and word not like '%(%' and word not like '%)%' " \
-        "and word not like '%/%' " \
-        "order by random() limit ?"
+            "and length(word) <= ? and word not like '%-%' " \
+            "and word not like '%\"%' and word not like \"%'%\" " \
+            "and word not like '%,%' and word not like '%!%' " \
+            "and word not like '%.%' and word not like '% %' " \
+            "and word not like '%(%' and word not like '%)%' " \
+            "and word not like '%/%' " \
+            "order by random() limit ?"
         if args.lower:
             words = [re.sub("[-\"' !.,()/]", '', row[0]).lower()
-                    for row in c.execute(sql, (args.min, args.max, args.count,))]
+                     for row in c.execute(sql,
+                                          (args.min, args.max, args.count,))]
         else:
             words = [re.sub("[-\"' !.,()/]", '', row[0]).lower().capitalize()
-                    for row in c.execute(sql, (args.min, args.max, args.count,))]
+                     for row in c.execute(sql,
+                                          (args.min, args.max, args.count,))]
 
     password = args.join_string.join(words)
     if args.digits:
         rand_digits = format(random.randint(0, 10**args.digits - 1),
-            str('0') + str(args.digits))
+                             str('0') + str(args.digits))
         password = args.join_string.join([password, rand_digits])
 
     print(password)

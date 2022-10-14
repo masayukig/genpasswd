@@ -13,7 +13,8 @@
 
 import testtools
 
+
 class Sample(testtools.TestCase):
 
     def test_pass(self):
-            assert True, "dummy sample test"
+        assert True, "dummy sample test"
